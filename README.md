@@ -1,51 +1,57 @@
 # gtnao/skills
 
-gtnao's Claude Code skills, distributed as a plugin marketplace.
+gtnao's Claude Code skills, distributed via [APM (Agent Package Manager)](https://github.com/microsoft/apm).
 
-## Use (production)
+## Install
 
-Install via marketplace. Plugin files are copied to `~/.claude/plugins/cache/` and reused across sessions.
-
-```text
-/plugin marketplace add gtnao/skills
-/plugin install gtnao-skills@gtnao
-```
-
-## Develop (this repo)
-
-For iterating on skills in this repo, use `--plugin-dir` to read the repo in-place. No cache copy, no version bump needed — edits to `SKILL.md` are picked up live within the session.
+Install an individual skill into the current project (deploys to `.claude/skills/`):
 
 ```bash
-claude --plugin-dir /path/to/this/repo
+apm install gtnao/skills/init-ts-cli
 ```
 
-The production `install` path does not hot-reload: once installed, plugin files are cached, and edits to this repo won't propagate until you bump the `version` in `.claude-plugin/marketplace.json` and run `/plugin marketplace update gtnao`. Use `--plugin-dir` during development to avoid this.
+In an empty repo (no `.claude/` directory yet), APM cannot auto-detect the target — pass `--target claude` explicitly:
+
+```bash
+apm install --target claude gtnao/skills/init-ts-cli
+```
+
+Or globally (deploys to `~/.claude/skills/`):
+
+```bash
+apm install -g gtnao/skills/init-ts-cli
+```
+
+Pin a version:
+
+```bash
+apm install gtnao/skills/init-ts-cli#v0.1.0
+```
+
+Or declare in `apm.yml`:
+
+```yaml
+dependencies:
+  apm:
+    - gtnao/skills/init-ts-cli
+```
+
+then `apm install`.
 
 ## Skills
 
-### `/init-ts-cli`
+### `init-ts-cli`
 
 Bootstrap a minimal TypeScript CLI project in the current empty directory. Uses pnpm (with supply-chain hardening via `.npmrc`), tsx for local execution, and citty for the CLI entry point. The project name is taken from the current directory basename.
 
-**Try it:**
-
-```bash
-mkdir -p /tmp/try-ts-cli && cd /tmp/try-ts-cli
-claude --plugin-dir /path/to/this/repo   # dev
-# or, if installed via marketplace:
-# claude
-```
-
-then in the session:
-
-```text
-/init-ts-cli
-```
+Invoke with `/init-ts-cli` in a Claude Code session opened in an empty directory.
 
 ## Structure
 
 ```
 .
-├── .claude-plugin/marketplace.json   # marketplace catalog
-└── skills/<skill-name>/               # individual skills (SKILL.md + supporting files)
+└── <skill-name>/        # one directory per skill
+    └── SKILL.md         # required; supporting files (scripts/, references/, assets/) optional
 ```
+
+Follows the [agentskills.io](https://agentskills.io/specification) open standard. Users install individual skills by path: `apm install gtnao/skills/<skill-name>`.
