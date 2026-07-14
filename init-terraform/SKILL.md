@@ -16,6 +16,8 @@ Set up terraform under `terraform/` in the current working directory, with S3 as
    - `<repo>`: `basename "$(pwd)"`
    - `<org>`: `basename "$(dirname "$(pwd)")"`
    - `<bucket>`: `tfstate.<repo>.<org>`
+
+   If `<bucket>` violates the S3 bucket naming rules (3–63 chars; lowercase letters, digits, `-`, `.` only; must start and end with a letter or digit; no consecutive dots; not IP-formatted), derive a compliant name — lowercase it, replace `_` with `-`, and shorten if over 63 chars — then propose it to the user with AskUserQuestion (proposed name as the recommended option) and proceed with their choice. Bucket names are hard to change later (state migration), so never silently use a transformed name.
 3. Resolve versions:
    - `<tf-version>`: run `terraform --version` and take the installed version's `major.minor.0` (e.g. `v1.15.0` → `1.15.0`).
    - `<aws-provider-version>`: fetch `https://registry.terraform.io/v1/providers/hashicorp/aws` and take the latest version's `major.minor` (e.g. `6.54.0` → `6.54`).
