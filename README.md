@@ -46,6 +46,12 @@ Bootstrap a minimal TypeScript CLI project in the current empty directory. Uses 
 
 Invoke with `/init-ts-cli` in a Claude Code session opened in an empty directory.
 
+### `init-terraform`
+
+Bootstrap terraform under `terraform/` in the current repository: a bucket-creation script for the S3 state backend, minimal config (backend/versions/provider), and a `.gitignore`, then prints the bucket-creation / `terraform init` commands for the user to run. The state bucket name is derived as `tfstate.<repo>.<org>` from the current and parent directory basenames (matching the GitHub org/repo layout).
+
+Invoke with `/init-terraform` in a Claude Code session opened at the repository root.
+
 ## Structure
 
 ```
