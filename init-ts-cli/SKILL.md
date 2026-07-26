@@ -48,20 +48,6 @@ Write these files verbatim. Do not add fields beyond what is shown — minimal i
 }
 ```
 
-### `.npmrc`
-
-Supply-chain hardening. Write this **before** running `pnpm add` so the settings apply to the first install.
-
-```
-minimum-release-age=1440
-block-exotic-subdeps=true
-ignore-scripts=true
-```
-
-- `minimum-release-age=1440` — wait 24h after a version is published before installing it. Mitigates compromised-then-yanked releases.
-- `block-exotic-subdeps=true` — reject transitive dependencies resolved from git URLs or tarballs.
-- `ignore-scripts=true` — never execute dependency lifecycle scripts. Safe for pure-JS deps (typescript, tsx, citty, @types/node). If a future dependency legitimately needs a build step, allowlist it via `allowBuilds` rather than dropping this flag.
-
 ### `.gitignore`
 
 ```

@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:18.4-bookworm
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      # PG18 changed the data dir; the declared VOLUME is /var/lib/postgresql
+      - postgres:/var/lib/postgresql
+
+volumes:
+  postgres:

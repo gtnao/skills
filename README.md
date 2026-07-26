@@ -52,6 +52,12 @@ Bootstrap terraform under `terraform/` in the current repository: a bucket-creat
 
 Invoke with `/init-terraform` in a Claude Code session opened at the repository root.
 
+### `init-next`
+
+Bootstrap an opinionated Next.js project in the current empty directory. Uses pnpm + TypeScript + Biome (no Tailwind), Mantine, PostgreSQL via docker compose, Atlas for schema-as-code migrations, and Prisma (db pull only, no prisma migrate). Requires docker and aqua for the verification steps.
+
+Invoke with `/init-next` in a Claude Code session opened in an empty directory.
+
 ## Structure
 
 ```
