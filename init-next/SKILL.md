@@ -46,6 +46,7 @@ pnpm prisma init --datasource-provider postgresql
 cp $ASSETS/prisma.config.ts .
 printf 'DATABASE_URL="postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"\n' > .env
 cp .env .env.example   # .env is excluded by create-next-app's .gitignore (.env*)
+printf '!.env.example\n' >> .gitignore   # .env* would also ignore .env.example
 rm -rf .windsurf .agents .claude skills-lock.json   # prisma init drops agent skills; do not ship them
 ```
 
